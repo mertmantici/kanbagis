@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanbagis/colors.dart';
+import 'package:kanbagis/ui/cubit/loginPageCubit.dart';
 import 'package:kanbagis/ui/cubit/registerPageCubit.dart';
-import 'package:kanbagis/ui/views/registerPage.dart';
+import 'package:kanbagis/ui/views/loginPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,21 +22,22 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => RegisterPageCubit()),
+        BlocProvider(create: (context) => LoginPageCubit()),
       ],
       child: MaterialApp(
         title: "Kan Bağış",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: MyColors.darkRed,
+            backgroundColor: MyColors.white,
             unselectedItemColor: MyColors.ten,
-            selectedItemColor: MyColors.white,
+            selectedItemColor: MyColors.darkRed,
             selectedIconTheme: IconThemeData(size: 35),
           ),
-          colorScheme: ColorScheme.fromSeed(seedColor: MyColors.darkRed),
+          colorScheme: ColorScheme.fromSeed(seedColor: MyColors.white),
           useMaterial3: true,
         ),
-        home: const Registerpage(), //AnaSayfa()
+        home: const Loginpage(), //AnaSayfa()
       ),
     );
   }

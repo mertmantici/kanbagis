@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDaoRepository {
   late Dio dio; // Dio nesnesini geç başlatacağız
@@ -18,12 +19,12 @@ class UserDaoRepository {
     ));
 
     // SSL sertifika hatalarını göz ardı etmek için
-    dio.httpClientAdapter = DefaultHttpClientAdapter()
-      ..onHttpClientCreate = (client) {
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-        return client;
-      };
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
   }
 
   Future<void> kisiKayit(
@@ -50,23 +51,52 @@ class UserDaoRepository {
       "city": city,
       "district": district
     };
-    print("Gönderilen veridao: $veri");
+    print("Gönderilen veri: $veri");
 
     try {
-      // API'ye POST isteği gönder
-      var cevap = await dio.post(
-        "/api/Auth/CreateUser",
-        data: veri,
-      );
+      var cevap = await dio.post("/api/Auth/CreateUser", data: veri);
       print("Kayıt başarılı: ${cevap.data}");
     } catch (e) {
-      print("Hata oluştu");
+      print("Hata oluştu:");
       if (e is DioError) {
         print("Dio hatası: ${e.response?.statusCode}");
         print("Hata detayı: ${e.response?.data}");
       } else {
-        print("Beklenmedik bir hata oluştu: $e");
+        print("Beklenmedik bir hata: $e");
       }
+    }
+  }
+
+  Future<bool> kullaniciGiris(String email, String password) async {
+    var veri = {"email": email, "password": password};
+    try {
+      var cevap = await dio.post("/api/Auth/Login", data: veri);
+
+      if (cevap.statusCode == 200) {
+        print("Kullanıcı girişi başarılı: ${cevap.data}");
+
+        var token = cevap.data["token"]["accessToken"]; // Token bilgisini al
+        if (token != null && token is String) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('accessToken', token); // Token'ı kaydet
+          print("Token başarıyla kaydedildi.");
+          return true;
+        } else {
+          print("Hata: Token bilgisi eksik veya yanlış formatta.");
+          return false;
+        }
+      } else {
+        print("Giriş başarısız: ${cevap.data}");
+        return false;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print("Dio hatası: ${e.response?.statusCode}, mesaj: ${e.message}");
+        print("Hata detayları: ${e.response?.data}");
+      } else {
+        print("Beklenmedik bir hata: $e");
+      }
+      return false;
     }
   }
 }

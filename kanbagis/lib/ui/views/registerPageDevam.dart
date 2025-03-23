@@ -37,14 +37,14 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: MyColors.darkRed,
+      backgroundColor: MyColors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 5,
-              child: Lottie.asset("assets/animations/kanbagisredbg.json",
+              child: Lottie.asset("assets/animations/kanbagis.json",
                   repeat: true, height: 200),
             ),
             _buildTextField(
@@ -60,7 +60,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
                       activeColor: MyColors.ten,
                       title: const Text(
                         "Erkek",
-                        style: TextStyle(color: MyColors.white),
+                        style: TextStyle(color: MyColors.darkRed),
                       ),
                       value: 1,
                       groupValue: radioDeger,
@@ -79,7 +79,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
                       activeColor: MyColors.ten,
                       title: const Text(
                         "Kadın",
-                        style: TextStyle(color: MyColors.white),
+                        style: TextStyle(color: MyColors.darkRed),
                       ),
                       value: 2,
                       groupValue: radioDeger,
@@ -96,7 +96,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
             ),
             Text(
               "Yaş : ${yas.toInt().toString()}",
-              style: const TextStyle(color: MyColors.white, fontSize: 25),
+              style: const TextStyle(color: MyColors.darkRed, fontSize: 25),
             ),
             Slider(
                 activeColor: MyColors.ten,
@@ -126,7 +126,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
         child: TextField(
           style: const TextStyle(
               color: MyColors.ten, fontSize: 20, fontWeight: FontWeight.bold),
-          cursorColor: MyColors.white,
+          cursorColor: MyColors.darkRed,
           controller: controller,
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: MyColors.ten, size: 30),
@@ -164,7 +164,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
             child: const Text(
               "Giriş Yap",
               style: TextStyle(
-                  color: MyColors.white,
+                  color: MyColors.darkRed,
                   fontSize: 17,
                   fontWeight: FontWeight.bold),
             ),
@@ -292,7 +292,7 @@ class _RegisterpagedevamState extends State<Registerpagedevam> {
           child: Text(
             message,
             style: const TextStyle(
-                color: MyColors.white,
+                color: MyColors.darkRed,
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),

@@ -12,11 +12,11 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: MyColors.darkRed,
+      backgroundColor: MyColors.white,
       body: Center(
         child: Text(
           "Home Page",
-          style: TextStyle(color: MyColors.white),
+          style: TextStyle(color: MyColors.darkRed),
         ),
       ),
     );

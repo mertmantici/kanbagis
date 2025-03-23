@@ -22,14 +22,14 @@ class _RegisterpageState extends State<Registerpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: MyColors.darkRed,
+      backgroundColor: MyColors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 5,
-              child: Lottie.asset("assets/animations/kanbagisredbg.json",
+              child: Lottie.asset("assets/animations/kanbagis.json",
                   repeat: true, height: 200),
             ),
             _buildTextField(
@@ -57,7 +57,7 @@ class _RegisterpageState extends State<Registerpage> {
         child: TextField(
           style: const TextStyle(
               color: MyColors.ten, fontSize: 20, fontWeight: FontWeight.bold),
-          cursorColor: MyColors.white,
+          cursorColor: MyColors.darkRed,
           controller: controller,
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: MyColors.ten, size: 30),
@@ -95,7 +95,7 @@ class _RegisterpageState extends State<Registerpage> {
             child: const Text(
               "Giriş Yap",
               style: TextStyle(
-                  color: MyColors.white,
+                  color: MyColors.darkRed,
                   fontSize: 17,
                   fontWeight: FontWeight.bold),
             ),
@@ -112,7 +112,7 @@ class _RegisterpageState extends State<Registerpage> {
         child: TextField(
           style: const TextStyle(
               color: MyColors.ten, fontSize: 20, fontWeight: FontWeight.bold),
-          cursorColor: MyColors.white,
+          cursorColor: MyColors.darkRed,
           controller: tfPassword,
           obscureText: true,
           decoration: InputDecoration(
@@ -228,7 +228,7 @@ class _RegisterpageState extends State<Registerpage> {
           child: Text(
             message,
             style: const TextStyle(
-                color: MyColors.white,
+                color: MyColors.darkRed,
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),

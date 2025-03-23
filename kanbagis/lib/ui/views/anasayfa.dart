@@ -22,14 +22,14 @@ class _AnasayfaState extends State<Anasayfa> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.darkRed,
+        backgroundColor: MyColors.white,
         title: const Center(
           child: Text(
             "Kan Bağış",
             style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: MyColors.white),
+                color: MyColors.darkRed),
           ),
         ),
       ),

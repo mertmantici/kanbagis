@@ -12,11 +12,11 @@ class _CreatepageState extends State<Createpage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: MyColors.darkRed,
+      backgroundColor: MyColors.white,
       body: Center(
         child: Text(
           "Create Page",
-          style: TextStyle(color: MyColors.white),
+          style: TextStyle(color: MyColors.darkRed),
         ),
       ),
     );
