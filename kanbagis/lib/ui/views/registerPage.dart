@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanbagis/colors.dart';
 import 'package:kanbagis/ui/views/loginPage.dart';
+import 'package:kanbagis/ui/views/registerPageDevam.dart';
 import 'package:lottie/lottie.dart';
 
 class Registerpage extends StatefulWidget {
@@ -31,15 +32,6 @@ class _RegisterpageState extends State<Registerpage> {
               child: Lottie.asset("assets/animations/kanbagisredbg.json",
                   repeat: true, height: 200),
             ),
-            const Expanded(
-              child: Text(
-                "Kayıt Ol",
-                style: TextStyle(
-                    color: MyColors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
             _buildTextField(
                 tfFirstName, Icons.person_outlined, "Adınızı giriniz"),
             _buildTextField(
@@ -49,6 +41,7 @@ class _RegisterpageState extends State<Registerpage> {
             _buildTextField(
                 tfPhoneNumber, Icons.phone, "Telefon numaranızı giriniz"),
             _buildPasswordField(),
+            _buildRegisterButton(context),
             _buildLoginRedirect(),
           ],
         ),
@@ -138,6 +131,90 @@ class _RegisterpageState extends State<Registerpage> {
             ),
             hintText: "Şifrenizi giriniz",
             hintStyle: const TextStyle(color: MyColors.ten),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRegisterButton(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: MyColors.ten, width: 3),
+                  borderRadius: BorderRadius.circular(15)),
+              backgroundColor: MyColors.red,
+            ),
+            onPressed: () {
+              String name = tfFirstName.text.trim();
+              String surname = tfLastName.text.trim();
+              String email = tfEmail.text.trim();
+              String number = tfPhoneNumber.text.trim();
+              String password = tfPassword.text.trim();
+
+              String cleanedPhoneNumber = number.replaceAll(' ', '');
+
+              if (name.isEmpty ||
+                  surname.isEmpty ||
+                  email.isEmpty ||
+                  password.isEmpty ||
+                  cleanedPhoneNumber.isEmpty) {
+                _showSnackBar(context, 'Lütfen alanları boş bırakmayınız.');
+                return;
+              }
+              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
+                _showSnackBar(context, 'Geçerli bir e-mail adresi giriniz.');
+                return;
+              }
+              if (password.length < 6) {
+                _showSnackBar(context, 'Şifre en az 6 karakter olmalıdır.');
+                return;
+              }
+              if (!RegExp(r'[A-Z]').hasMatch(password)) {
+                _showSnackBar(
+                    context, 'Şifre en az bir büyük harf içermelidir.');
+                return;
+              }
+              if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) {
+                _showSnackBar(
+                    context, 'Şifre en az bir özel karakter içermelidir.');
+                return;
+              }
+
+              if (cleanedPhoneNumber.length != 11 ||
+                  cleanedPhoneNumber[0] != '0') {
+                _showSnackBar(context,
+                    'Telefon numaranızı önünde 0 olacak biçimde 11 karakter giriniz.');
+                return;
+              }
+
+              // Kullanıcı kaydını başlat
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Registerpagedevam(
+                      firstName: name,
+                      lastName: surname,
+                      email: email,
+                      phoneNumber: cleanedPhoneNumber,
+                      password: password),
+                ),
+              );
+
+              // Başarılı kayıt animasyonu göster
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Devam Et",
+                style: TextStyle(color: MyColors.white, fontSize: 22),
+              ),
+            ),
           ),
         ),
       ),

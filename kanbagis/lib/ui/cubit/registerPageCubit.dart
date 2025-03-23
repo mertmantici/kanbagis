@@ -15,6 +15,9 @@ class RegisterPageCubit extends Cubit<void> {
       String age,
       String city,
       String district) async {
+    print("Kayıt işlemi başladı...");
+    print(
+        "Ad: $firstName, Soyad: $lastName, Email: $email, Telefon: $phoneNumber, Kan Grubu: $bloodGroup, Cinsiyet: $gender, Yaş: $age, Şehir: $city, İlçe: $district");
     await repo.kisiKayit(firstName, lastName, email, phoneNumber, password,
         bloodGroup, gender, age, city, district);
   }
