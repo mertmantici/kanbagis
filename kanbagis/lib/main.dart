@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanbagis/colors.dart';
 import 'package:kanbagis/ui/cubit/loginPageCubit.dart';
+import 'package:kanbagis/ui/cubit/profilePageCubit.dart';
 import 'package:kanbagis/ui/cubit/registerPageCubit.dart';
+import 'package:kanbagis/ui/views/anasayfa.dart';
 import 'package:kanbagis/ui/views/loginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,12 +20,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool? isLoggedIn;
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => RegisterPageCubit()),
         BlocProvider(create: (context) => LoginPageCubit()),
+        BlocProvider(create: (context) => ProfilePageCubit()),
       ],
       child: MaterialApp(
         title: "Kan Bağış",
@@ -37,7 +55,9 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: MyColors.white),
           useMaterial3: true,
         ),
-        home: const Loginpage(), //AnaSayfa()
+        home: isLoggedIn == null
+            ? const Center(child: CircularProgressIndicator())
+            : (isLoggedIn == true ? const Anasayfa() : const Loginpage()),
       ),
     );
   }

@@ -99,4 +99,31 @@ class UserDaoRepository {
       return false;
     }
   }
+
+  Future<bool> cikisYap() async {
+    try {
+      var cevap = await dio.get("/api/Auth/Logout");
+      if (cevap.statusCode == 200) {
+        print("Kullanıcı çıkış başarılı: ${cevap.data}");
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.remove('accessToken');
+        await prefs.setBool('isLoggedIn', false); // 👈 Bu satır kritik
+        print("Token silindi, giriş durumu güncellendi.");
+
+        return true;
+      } else {
+        print("Çıkış başarısız: ${cevap.data}");
+        return false;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print("Dio hatası: ${e.response?.statusCode}, mesaj: ${e.message}");
+        print("Hata detayları: ${e.response?.data}");
+      } else {
+        print("Beklenmedik bir hata: $e");
+      }
+      return false;
+    }
+  }
 }
