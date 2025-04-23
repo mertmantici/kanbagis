@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:kanbagis/data/entity/getUserAnswer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDaoRepository {
@@ -74,12 +75,14 @@ class UserDaoRepository {
 
       if (cevap.statusCode == 200) {
         print("Kullanıcı girişi başarılı: ${cevap.data}");
-
+        var id = cevap.data["userId"];
         var token = cevap.data["token"]["accessToken"]; // Token bilgisini al
-        if (token != null && token is String) {
+        if (token != null && token is String && id != null && id is String) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('accessToken', token); // Token'ı kaydet
-          print("Token başarıyla kaydedildi.");
+          await prefs.setString('userId', id);
+          print("Token ve id başarıyla kaydedildi. $id-$token");
+
           return true;
         } else {
           print("Hata: Token bilgisi eksik veya yanlış formatta.");
@@ -109,6 +112,7 @@ class UserDaoRepository {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.remove('accessToken');
         await prefs.setBool('isLoggedIn', false); // 👈 Bu satır kritik
+        await prefs.remove('userId');
         print("Token silindi, giriş durumu güncellendi.");
 
         return true;
@@ -125,5 +129,26 @@ class UserDaoRepository {
       }
       return false;
     }
+  }
+
+  Future<GetUserAnswer> kisiGetir(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    if (token == null) {
+      throw Exception("Token bulunamadı, kullanıcı giriş yapmamış olabilir.");
+    }
+    print(id);
+    var cevap = await dio.get(
+      "/api/User/GetUserInformation?userId=$id",
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    print("Kullanıcı ID: $id");
+    return GetUserAnswer.fromJson(cevap.data);
   }
 }
