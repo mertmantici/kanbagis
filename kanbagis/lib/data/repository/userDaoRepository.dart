@@ -151,4 +151,56 @@ class UserDaoRepository {
     print("Kullanıcı ID: $id");
     return GetUserAnswer.fromJson(cevap.data);
   }
+
+  Future<bool> bilgiGuncelle(
+      String id,
+      String city,
+      String district,
+      String email,
+      String phone,
+      String oldPassword,
+      String newPassword) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    if (token == null) {
+      throw Exception("Token bulunamadı, kullanıcı giriş yapmamış olabilir.");
+    }
+    try {
+      var veri = {
+        "userId": id,
+        "city": city,
+        "district": district,
+        "email": email,
+        "phoneNumber": phone,
+        "oldPassword": oldPassword,
+        "newPassword": newPassword,
+      };
+      var cevap = await dio.post(
+        "/api/User/UpdateUserInformation",
+        data: veri,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+      if (cevap.statusCode == 200) {
+        print("Bilgiler güncellendi: ${cevap.data}");
+
+        return true;
+      } else {
+        print("Güncelleme başarısız: ${cevap.data}");
+        return false;
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print("Dio hatası: ${e.response?.statusCode}, mesaj: ${e.message}");
+        print("Hata detayları: ${e.response?.data}");
+      } else {
+        print("Beklenmedik bir hata: $e");
+      }
+      return false;
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanbagis/colors.dart';
 import 'package:kanbagis/ui/cubit/profilePageCubit.dart';
 import 'package:kanbagis/ui/views/loginPage.dart';
+import 'package:kanbagis/ui/views/profilGuncellePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/entity/getUserAnswer.dart';
@@ -49,275 +50,361 @@ class _ProfilepageState extends State<Profilepage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "  Hoş geldin ${user.firstName.toUpperCase()}",
-                    style: const TextStyle(
-                        color: MyColors.red,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.person,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            "${user.firstName[0].toUpperCase() + user.firstName.substring(1)} ${user.lastName[0].toUpperCase() + user.lastName.substring(1)}",
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.mail,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.email,
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          user.gender == "erkek"
-                              ? const Icon(
-                                  Icons.male,
-                                  color: MyColors.red,
-                                  size: 30,
-                                )
-                              : const Icon(
-                                  Icons.female,
-                                  color: MyColors.red,
-                                  size: 30,
-                                ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.gender[0].toUpperCase() +
-                                user.gender.substring(1),
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.bloodtype,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.bloodGroup.toUpperCase(),
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.calendar_month,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.age,
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_city,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.city[0].toUpperCase() + user.city.substring(1),
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: MyColors.ten, width: 3),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 5.0,
-                    color: MyColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_city,
-                            color: MyColors.red,
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            user.district[0].toUpperCase() +
-                                user.district.substring(1),
-                            style: const TextStyle(
-                                color: MyColors.red, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: MyColors.darkRed, width: 3),
-                                borderRadius: BorderRadius.circular(12.0)),
-                            elevation: 5.0,
-                            backgroundColor: MyColors.red),
-                        onPressed: () async {
-                          var success =
-                              await context.read<ProfilePageCubit>().cikisYap();
-
-                          if (success) {
-                            // Kullanıcıyı LoginPage'e yönlendir
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Loginpage()));
-                          }
-                        },
-                        child: const Text(
-                          "Çıkış Yap",
-                          style: TextStyle(
-                              color: MyColors.white,
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "  Hoş geldin ${user.firstName.toUpperCase()}",
+                          style: const TextStyle(
+                              color: MyColors.red,
                               fontSize: 22,
                               fontWeight: FontWeight.bold),
                         ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profilguncellepage(
+                                        userId: userId!,
+                                        city: user.city,
+                                        district: user.district,
+                                        email: user.email,
+                                        phone: user.phone)));
+                          },
+                          icon: const Icon(
+                            Icons.settings,
+                            size: 25,
+                          ),
+                          color: MyColors.darkRed,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              "${user.firstName[0].toUpperCase() + user.firstName.substring(1)} ${user.lastName[0].toUpperCase() + user.lastName.substring(1)}",
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.mail,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.email,
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.phone,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.phone,
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            user.gender == "erkek" || user.gender == "Erkek"
+                                ? const Icon(
+                                    Icons.male,
+                                    color: MyColors.red,
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.female,
+                                    color: MyColors.red,
+                                    size: 30,
+                                  ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.gender[0].toUpperCase() +
+                                  user.gender.substring(1),
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.bloodtype,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.bloodGroup.toUpperCase(),
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.calendar_month,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.age,
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_city,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.city[0].toUpperCase() +
+                                  user.city.substring(1),
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 2.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: MyColors.ten, width: 3),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 5.0,
+                      color: MyColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_city,
+                              color: MyColors.red,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              user.district[0].toUpperCase() +
+                                  user.district.substring(1),
+                              style: const TextStyle(
+                                  color: MyColors.red, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: MyColors.darkRed, width: 3),
+                                  borderRadius: BorderRadius.circular(12.0)),
+                              elevation: 5.0,
+                              backgroundColor: MyColors.red),
+                          onPressed: () async {
+                            var success = await context
+                                .read<ProfilePageCubit>()
+                                .cikisYap();
+
+                            if (success) {
+                              // Kullanıcıyı LoginPage'e yönlendir
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Loginpage()));
+                            }
+                          },
+                          child: const Text(
+                            "Çıkış Yap",
+                            style: TextStyle(
+                                color: MyColors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

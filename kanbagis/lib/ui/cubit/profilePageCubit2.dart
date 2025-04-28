@@ -12,7 +12,8 @@ class ProfilePageCubit2 extends Cubit<GetUserAnswer> {
             age: "",
             city: "",
             district: "",
-            email: ""));
+            email: "",
+            phone: ""));
   var repo = UserDaoRepository();
   Future<void> kisiGetir(String id) async {
     var user = await repo.kisiGetir(id);
