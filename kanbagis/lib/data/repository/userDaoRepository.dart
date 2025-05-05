@@ -113,6 +113,15 @@ class UserDaoRepository {
         await prefs.remove('accessToken');
         await prefs.setBool('isLoggedIn', false); // 👈 Bu satır kritik
         await prefs.remove('userId');
+        await prefs.remove('city');
+        await prefs.remove('district');
+        await prefs.remove('ad');
+        await prefs.remove('soyad');
+        await prefs.remove('tel');
+        await prefs.remove('eposta');
+        await prefs.remove('yasi');
+        await prefs.remove('cinsiyet');
+        await prefs.remove('kanGrubu');
         print("Token silindi, giriş durumu güncellendi.");
 
         return true;

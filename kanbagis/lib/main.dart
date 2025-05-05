@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanbagis/colors.dart';
+import 'package:kanbagis/ui/cubit/createPageCubit.dart';
+import 'package:kanbagis/ui/cubit/hospitalCubit.dart';
 import 'package:kanbagis/ui/cubit/loginPageCubit.dart';
 import 'package:kanbagis/ui/cubit/profilGuncelleCubit.dart';
 import 'package:kanbagis/ui/cubit/profilePageCubit.dart';
@@ -45,6 +47,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => ProfilePageCubit()),
         BlocProvider(create: (context) => ProfilePageCubit2()),
         BlocProvider(create: (context) => ProfilGuncelleCubit()),
+        BlocProvider(create: (context) => HospitalCubit()),
+        BlocProvider(create: (context) => CreatePageCubit()),
       ],
       child: MaterialApp(
         title: "Kan Bağış",
