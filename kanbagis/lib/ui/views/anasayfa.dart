@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanbagis/colors.dart';
 import 'package:kanbagis/ui/views/createPage.dart';
+import 'package:kanbagis/ui/views/groupPage.dart';
 import 'package:kanbagis/ui/views/homePage.dart';
 import 'package:kanbagis/ui/views/profilePage.dart';
 
@@ -12,10 +13,11 @@ class Anasayfa extends StatefulWidget {
 }
 
 class _AnasayfaState extends State<Anasayfa> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   List<Widget> body = const [
-    Createpage(),
     Homepage(),
+    Createpage(),
+    Grouppage(),
     Profilepage(),
   ];
   @override
@@ -45,8 +47,9 @@ class _AnasayfaState extends State<Anasayfa> {
             });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.create), label: "Create"),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.create), label: "Create"),
+            BottomNavigationBarItem(icon: Icon(Icons.group), label: "Group"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
           ]),
     );

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanbagis/colors.dart';
+import 'package:kanbagis/data/entity/group.dart';
 import 'package:kanbagis/data/entity/hospital.dart';
 import 'package:kanbagis/ui/cubit/createPageCubit.dart';
 import 'package:kanbagis/ui/views/anasayfa.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../cubit/grupListeleCubit.dart';
 import '../cubit/hospitalCubit.dart';
 import '../cubit/profilePageCubit2.dart';
 
@@ -20,6 +22,7 @@ class _CreatepageState extends State<Createpage> {
   bool currentUser = true;
   String? userId;
   String? selectedHospital;
+  String? selectedGroup;
   String? bloodGroup;
   String? age;
   double yas = 30;
@@ -59,6 +62,7 @@ class _CreatepageState extends State<Createpage> {
       await prefs.setString('kanGrubu', profil.bloodGroup);
 
       context.read<HospitalCubit>().hastaneleriGetir(profil.city, "");
+      context.read<GrupListeleCubit>().kullaniciGruplariListele(userId!);
     }
   }
 
@@ -142,6 +146,39 @@ class _CreatepageState extends State<Createpage> {
                   ),
                 ),
               ),
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: BlocBuilder<GrupListeleCubit, List<Group>>(
+                    builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: DropdownButton<String>(
+                          dropdownColor: Colors.grey[300],
+                          isExpanded: true,
+                          value: selectedGroup,
+                          hint: const Text("Grup Seçiniz"),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedGroup = newValue;
+                            });
+                          },
+                          items: state.map((group) {
+                            return DropdownMenuItem<String>(
+                              value: group.id,
+                              child: Text(
+                                group.name,
+                                style: const TextStyle(fontSize: 17),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               _buildTextField(tfDescription, Icons.description, "Açıklama"),
               Padding(
                 padding:
@@ -174,12 +211,13 @@ class _CreatepageState extends State<Createpage> {
                             soyad!,
                             tel!,
                             eposta!,
-                            kanGrubu!!,
+                            kanGrubu!,
                             yasi!,
                             cinsiyet!,
                             tfDescription.text,
                             selectedHospital!,
-                            userId!);
+                            userId!,
+                            selectedGroup!);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -345,6 +383,36 @@ class _CreatepageState extends State<Createpage> {
                   height: 5,
                 ),
                 _buildTextField(tfDescription, Icons.description, "Açıklama"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: BlocBuilder<GrupListeleCubit, List<Group>>(
+                    builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: DropdownButton<String>(
+                          dropdownColor: Colors.grey[300],
+                          isExpanded: true,
+                          value: selectedGroup,
+                          hint: const Text("Grup Seçiniz"),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedGroup = newValue;
+                            });
+                          },
+                          items: state.map((group) {
+                            return DropdownMenuItem<String>(
+                              value: group.id,
+                              child: Text(
+                                group.name,
+                                style: const TextStyle(fontSize: 17),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 _buildDonationButton(context),
               ]),
             ),
@@ -479,7 +547,8 @@ class _CreatepageState extends State<Createpage> {
                   gender!,
                   tfDescription.text,
                   selectedHospital!,
-                  userId!);
+                  userId!,
+                  selectedGroup!);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const Anasayfa()));
             }

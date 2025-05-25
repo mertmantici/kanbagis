@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:kanbagis/data/entity/getDonation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BloodDaoRepository {
@@ -38,7 +39,8 @@ class BloodDaoRepository {
       String gender,
       String description,
       String hospitalId,
-      String appUserId) async {
+      String appUserId,
+      String groupId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
     var veri = {
@@ -52,7 +54,8 @@ class BloodDaoRepository {
       "gender": gender,
       "description": description,
       "hospitalId": hospitalId,
-      "appUserId": appUserId
+      "appUserId": appUserId,
+      "groupId": groupId
     };
     print("Gönderilen veri: $veri");
 
@@ -75,6 +78,29 @@ class BloodDaoRepository {
       } else {
         print("Beklenmedik bir hata: $e");
       }
+    }
+  }
+
+  Future<List<GetDonation>> bagislariListele(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+    var veri = {"userId": userId};
+    print("Gönderilen veri: $veri");
+
+    var cevap = await dio.get(
+      "/api/BloodDonation/GetBloodDonationsByUserGroups",
+      queryParameters: veri,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+    if (cevap.statusCode == 200) {
+      List<dynamic> donationList = cevap.data;
+      return donationList.map((e) => GetDonation.fromJson(e)).toList();
+    } else {
+      return [];
     }
   }
 }
